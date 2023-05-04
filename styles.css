@@ -23,3 +23,13 @@
 	padding: 15px 30px;
 	cursor: pointer;
 }
+
+.move {
+	display: none;
+}
+
+@media (width: 375px) {
+	.move {
+		display: block;
+	}
+}

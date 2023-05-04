@@ -38,6 +38,8 @@ let board = new Board(ctx, ctxNext);
 addEventListener();
 initNext();
 
+document.addEventListener('DOMContentLoaded', touchScreen);
+
 function initNext() {
 	// Calculate size of canvas from constants.
 	ctxNext.canvas.width = 4 * BLOCK_SIZE;
@@ -132,4 +134,35 @@ function pause() {
 	ctx.font = '1px Arial';
 	ctx.fillStyle = 'yellow';
 	ctx.fillText('PAUSED', 3, 4);
+}
+
+function touchScreen() {
+	const el = document.getElementById('board');
+	const moveLeft = document.querySelector('.left');
+	const moveRight = document.querySelector('.right');
+
+	el.addEventListener('touchstart', rotateBrick);
+	moveLeft.addEventListener('touchstart', leftBrick);
+	moveRight.addEventListener('touchstart', rightBrick);
+}
+
+function rotateBrick() {
+	let p = moves[KEY.UP](board.piece);
+	board.piece.move(p);
+}
+
+function leftBrick() {
+	let p = moves[KEY.LEFT](board.piece);
+	if (board.valid(p)) {
+		account.score += POINTS.HARD_DROP;
+		board.piece.move(p);
+	}
+}
+
+function rightBrick() {
+	let p = moves[KEY.RIGHT](board.piece);
+	if (board.valid(p)) {
+		account.score += POINTS.HARD_DROP;
+		board.piece.move(p);
+	}
 }

@@ -153,7 +153,6 @@ class Board {
 	rotate(piece) {
 		// Clone with JSON for immutability.
 		let p = JSON.parse(JSON.stringify(piece));
-
 		// Transpose matrix
 		for (let y = 0; y < p.shape.length; ++y) {
 			for (let x = 0; x < y; ++x) {
