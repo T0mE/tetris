@@ -140,10 +140,12 @@ function touchScreen() {
 	const el = document.getElementById('board');
 	const moveLeft = document.querySelector('.left');
 	const moveRight = document.querySelector('.right');
+	const moveDown = document.querySelector('.down');
 
 	el.addEventListener('touchstart', rotateBrick);
 	moveLeft.addEventListener('touchstart', leftBrick);
 	moveRight.addEventListener('touchstart', rightBrick);
+	moveDown.addEventListener('touchstart', downBrick);
 }
 
 function rotateBrick() {
@@ -163,6 +165,14 @@ function rightBrick() {
 	let p = moves[KEY.RIGHT](board.piece);
 	if (board.valid(p)) {
 		account.score += POINTS.HARD_DROP;
+		board.piece.move(p);
+	}
+}
+
+function downBrick() {
+	let p = moves[KEY.DOWN](board.piece);
+	if (board.valid(p)) {
+		// account.score += POINTS.HARD_DROP;
 		board.piece.move(p);
 	}
 }
