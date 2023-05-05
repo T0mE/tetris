@@ -28,7 +28,7 @@
 	display: none;
 }
 
-@media (width: 375px) {
+@media (max-width: 676px) {
 	.move {
 		display: block;
 	}
