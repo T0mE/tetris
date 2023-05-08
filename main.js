@@ -62,7 +62,6 @@ function addEventListener() {
 				// Hard drop
 				while (board.valid(p)) {
 					account.score += POINTS.HARD_DROP;
-					localStorage.setItem('myScore', account.score);
 					board.piece.move(p);
 					p = moves[KEY.DOWN](board.piece);
 				}
@@ -70,7 +69,6 @@ function addEventListener() {
 				board.piece.move(p);
 				if (event.keyCode === KEY.DOWN) {
 					account.score += POINTS.SOFT_DROP;
-					localStorage.setItem('myScore', account.score);
 				}
 			}
 		}
@@ -120,6 +118,17 @@ function gameOver() {
 	ctx.font = '1px Arial';
 	ctx.fillStyle = 'red';
 	ctx.fillText('GAME OVER', 1.8, 4);
+	ctx.fillText('HighScore: ' + getScore(), 0.1, 6);
+}
+
+function getScore() {
+	const actualScore = localStorage.getItem('score');
+	if (actualScore !== 0 && actualScore >= account.score) {
+		return actualScore;
+	} else {
+		localStorage.setItem('score', account.score);
+		return account.score;
+	}
 }
 
 function pause() {
