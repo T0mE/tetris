@@ -62,6 +62,7 @@ function addEventListener() {
 				// Hard drop
 				while (board.valid(p)) {
 					account.score += POINTS.HARD_DROP;
+					localStorage.setItem('myScore', account.score);
 					board.piece.move(p);
 					p = moves[KEY.DOWN](board.piece);
 				}
@@ -69,6 +70,7 @@ function addEventListener() {
 				board.piece.move(p);
 				if (event.keyCode === KEY.DOWN) {
 					account.score += POINTS.SOFT_DROP;
+					localStorage.setItem('myScore', account.score);
 				}
 			}
 		}
@@ -172,7 +174,6 @@ function rightBrick() {
 function downBrick() {
 	let p = moves[KEY.DOWN](board.piece);
 	if (board.valid(p)) {
-		// account.score += POINTS.HARD_DROP;
 		board.piece.move(p);
 	}
 }
