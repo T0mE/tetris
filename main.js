@@ -74,7 +74,7 @@ function addEventListener() {
 		}
 	});
 }
-
+console.log(account.score);
 function resetGame() {
 	account.score = 0;
 	account.lines = 0;
@@ -119,15 +119,29 @@ function gameOver() {
 	ctx.fillStyle = 'red';
 	ctx.fillText('GAME OVER', 1.8, 4);
 	ctx.fillText('HighScore: ' + getScore(), 0.1, 6);
+	console.log(localStorage.getItem('score'));
 }
 
 function getScore() {
-	const actualScore = localStorage.getItem('score');
-	if (actualScore !== 0 && actualScore >= account.score) {
-		return actualScore;
-	} else {
-		localStorage.setItem('score', account.score);
+	if (localStorage.getItem('score') === null) {
+		let scores = [];
+		console.log(account.score);
+		scores[0] = account.score;
+		localStorage.setItem('score', JSON.stringify(scores));
+		console.log(scores);
 		return account.score;
+	} else {
+		let arrayString = localStorage.getItem('score');
+		let scores = JSON.parse(arrayString);
+		let lengthScores = scores.length;
+		console.log(typeof lengthScores);
+		const actualScore = account.score;
+		if (lengthScores < 3) {
+			scores[lengthScores] = actualScore;
+			localStorage.setItem('score', JSON.stringify(scores));
+		}
+
+		console.log(scores.length);
 	}
 }
 
