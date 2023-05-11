@@ -118,31 +118,53 @@ function gameOver() {
 	ctx.font = '1px Arial';
 	ctx.fillStyle = 'red';
 	ctx.fillText('GAME OVER', 1.8, 4);
-	ctx.fillText('HighScore: ' + getScore(), 0.1, 6);
-	console.log(localStorage.getItem('score'));
+	ctx.fillText('Your Score: ' + account.score, 0.1, 6);
+	ctx.fillText('Top Score: ', 0.1, 7);
+	let arr = getScore();
+	console.log(arr);
+	for (let i = 0; i < arr.length; i++) {
+		let nr = i;
+		ctx.fillText(nr++ + arr[i], 0.1, 8 + i);
+	}
 }
 
 function getScore() {
 	if (localStorage.getItem('score') === null) {
 		let scores = [];
-		console.log(account.score);
 		scores[0] = account.score;
 		localStorage.setItem('score', JSON.stringify(scores));
-		console.log(scores);
-		return account.score;
+		return scores;
 	} else {
 		let arrayString = localStorage.getItem('score');
 		let scores = JSON.parse(arrayString);
 		let lengthScores = scores.length;
-		console.log(typeof lengthScores);
 		const actualScore = account.score;
 		if (lengthScores < 3) {
 			scores[lengthScores] = actualScore;
+			scores.sort((a, b) => b - a);
 			localStorage.setItem('score', JSON.stringify(scores));
 		}
-
-		console.log(scores.length);
+		let newScore = [];
+		let changeScore = false;
+		for (let s of scores) {
+			if (account.score > s && changeScore === false) {
+				newScore.push(account.score);
+				// console.log(newScore.length);
+				if (newScore.length === 3) break;
+				newScore.push(s);
+				changeScore = true;
+			} else {
+				newScore.push(s);
+			}
+			if (newScore.length === 3) break;
+		}
+		localStorage.setItem(
+			'score',
+			JSON.stringify(newScore.sort((a, b) => b - a))
+		);
+		return newScore;
 	}
+	return null;
 }
 
 function pause() {
